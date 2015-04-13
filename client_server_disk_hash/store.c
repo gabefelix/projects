@@ -1,7 +1,4 @@
-/**
- * Author: Juan C. Manzo
- * Key-Value store implementation.
- */
+
 
 #include <stdlib.h>
 #include <string.h>

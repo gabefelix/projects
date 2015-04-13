@@ -1,6 +1,6 @@
 /**
- * Author: Juan C. Manzo
- * Hash table ADT implementation.
+ * Hash table by: Juan C. Manzo
+ * 
  */
 
 #include <stdlib.h>

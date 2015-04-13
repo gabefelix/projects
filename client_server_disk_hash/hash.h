@@ -1,6 +1,5 @@
 /**
- * Author: Juan C. Manzo
- * Hash table ADT function prototypes.
+ * hash table by Juan C. Manzo
  */
 
 #if !defined(_hash_H_INCLUDE_)
