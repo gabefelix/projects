@@ -1,0 +1,51 @@
+We feel we were a bit optimistic with our first sprint 1 due to no one knowing 
+any of the technology that we are currently using. The second sprint should be 
+much better as we have planned meeting days for the team to get together and 
+work on the project as a team. We also have broken down our user stories better
+into more manageable story points. 
+
+What should we stop doing?
+Due to everyones schedule, we were having a hard time getting everyone together
+for 3x weekly scrums. We are working on setting dates and times to have our 
+weekly scrums.
+
+What should we start doing?
+I think if we all met once a week to work together on our project it might help
+get past parts that we are stuck on. 
+Working together in a small group at the
+hackathon really helped move our project forward so I feel it would be the same
+for our team.
+I feel that we should break down our user stories better into smaller more 
+manageable stories. 
+We need to add story points to each user story.
+Overall I think we can manage our team a little bit better with responsibilities
+and goals for each sprint
+We didn’t incorporate a burnup chart.
+
+What is working well that we should continue doing?
+I feel since we got started late, we didn’t have enough time to figure out what 
+is working well for our team, but we had a good idea of what we needed to do. 
+
+
+What work was completed and not completed?
+Completed:
+    Being able to setup multiple reminders for a single event so that i won't
+        forget the event.
+    The ability to type my reminder message in and submit it to a database so 
+        that it can be stored for later. 
+    The abilitiy to specify when a reminder is 'due' so that I will be reminded 
+        on time
+Not Completed:
+    Be able to send e-mails through code so that the user can get the event 
+        reminder on time.
+    Store all of my reminders in a table.
+    Being able to host a mailing server so that the text and emails can be 
+        sent out on time.
+    
+Partially Completed:
+    Setup a basic website layout so the backend can be connected to.
+
+What is our rate of completing work?
+~50%
+
+

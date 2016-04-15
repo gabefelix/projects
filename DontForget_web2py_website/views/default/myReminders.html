@@ -1,0 +1,13 @@
+{{extend "layout.html"}}
+<h1>These Are Your Reminders</h1>
+
+<ul>{{for alarm in list:}}
+
+    {{=alarm.reminder_message}} <br>
+    Date -- {{=alarm.reminder_date}}<br>
+    Time -- {{=alarm.reminder_time}}<br>
+    {{=LI(A('Edit Reminder', _href=URL('edit', args=alarm.id)))}}
+    {{=LI(A('Send to a Friend', _href=URL('friendsend', args=alarm.id)))}}
+    <br>
+{{pass}}</ul>
+{{=A('Back Home', _href=URL('signedIn'))}}

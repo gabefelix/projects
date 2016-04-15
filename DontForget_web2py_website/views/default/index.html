@@ -1,0 +1,22 @@
+{{extend 'layout.html'}}
+<head>
+
+<style>
+
+</style>
+
+</head>
+
+<!--This will send to signedIn page is the user is authorized -->
+{{if auth.user and not session.fromSignedIn:}}
+    {{redirect((URL('signedIn')))}}
+{{pass}}
+
+<!-- Send to display manual form wr the custom form is -->
+{{redirect((URL('display_manual_form')))}}
+
+
+
+
+
+<div style="text-align: center;"> {{=form}}</div>

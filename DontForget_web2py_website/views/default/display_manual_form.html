@@ -1,0 +1,73 @@
+<!--Notes:
+ edits 3/10/16: LG - will autofill,use phoneNum var. init in controller
+                   - Put form.vars.xx to autofill forms if get a form.error
+                   - Styling moved to static/customForm.css
+                   - added datepicker, jqueryUi for date input, needed some extra formatting but works
+ -->
+
+{{extend 'layout.html'}}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+    $( "#datepicker" ).datepicker("option", "dateformat","yy-dd-mm");
+
+  });
+  </script>
+</head>
+
+<link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+
+<!--The html to display form -->
+
+<div class="form-style-10">
+<link href="{{=URL('static', 'css/customForm.css')}}" rel="stylesheet" type="text/css" />
+<h1>Don't Forget!<span>Enter your information and we will make sure you DONT FORGET!</span></h1>
+{{=form.custom.begin}}
+<form action="#" enctype="multipart/form-data" method="post" autocomplete="on">
+
+    <div class="section"><span>1</span>Phone Number</div>
+        <div class="inner-wrap">
+        <label>Phone Number<input type="number" name="phone_number" value="{{=phoneNum}}"/></label>
+
+    </div>
+    <div class="section"><span>2</span>Reminder Date + Time</div>
+        <div class="inner-wrap">
+        <label>Reminder Date <input  type="text" id="datepicker" onclick="myFunction()" name="reminder_date" value="{{=form.vars.reminder_date}}" /></label>
+        <label>Reminder Time <input type="time" onclick="myFunction()" name="reminder_time" value="{{=form.vars.reminder_time}}" /></label>
+    </div>
+    <div class="section"><span>3</span>Reminder Message</div>
+        <div class="inner-wrap">
+        <label>Reminder Message <input type="text" name="reminder_message" value="{{=form.vars.reminder_message}}" /></label>
+    </div>
+    <div class="button-section">
+     <input type="submit" name="Sign Up" />
+     <input type="hidden" name="formname" value="test" />
+     <span class="privacy-policy">
+
+     </span>
+    </div>
+</form>
+{{=form.custom.end}}
+</div>
+
+<br>
+<br>
+
+<!--Display form.vars for debugging -->
+{{#=BEAUTIFY(form.vars)}}
+
+
+</html>
+
+</html>

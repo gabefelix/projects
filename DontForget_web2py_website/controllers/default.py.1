@@ -1,0 +1,172 @@
+from gluon.tools import Mail
+from datetime import datetime
+import time
+
+mail = Mail()
+
+mail.settings.server = 'smtp.gmail.com:587'
+mail.settings.sender = 'dontforgetyourevent@gmail.com'
+mail.settings.login = 'dontforgetyourevent@gmail.com:web2pyucsc'
+
+
+def user():
+    return dict(form=auth())
+
+def index():
+    # Display the form and accept input
+    form = SQLFORM(db.alarm)
+    if form.process().accepted:
+
+        theAddress = ''
+        emailnum = form.vars.phone_number
+
+        response.flash = 'Successfully added a reminder!'
+
+        theList = phoneProviderList(emailnum)
+
+    return dict(form=form)
+
+#def show():
+ #   alarms = db.alarm(request.args[0]) or redirect(URL('index'))
+
+def init():
+    return dict(message="Hello")
+
+def phoneProviderList(phonenumber):
+
+    listOfNumbers = []
+    listOfNumbers.append(phonenumber + "@text.wireless.alltel.com") #Alltel
+    listOfNumbers.append(phonenumber + "@text.att.net")             #AT&T
+    listOfNumbers.append(phonenumber + "@sms.mycricket.com")        #Cricket
+    listOfNumbers.append(phonenumber + "@messaging.sprintpcs.com")  #Sprint
+    listOfNumbers.append(phonenumber + "@page.nextel.com")          #Nextel
+    listOfNumbers.append(phonenumber + "@tmomail.net")              #T-Mobile
+    listOfNumbers.append(phonenumber + "@email.uscc.net")           #U.S. Cellular
+    listOfNumbers.append(phonenumber + "@vtext.com")                #Verizon
+    return listOfNumbers
+
+def signedIn():
+    form = SQLFORM(db.alarm)
+    session.fromSignedIn=1 #flag to indicate coming from signed in to create a new alarm
+    return dict(form=form)
+
+def myReminders():
+    return dict()
+
+
+def show():
+     alarms = db.alarm(request.args[0]) or redirect(URL('index'))
+     return dict(alarm=alarms)
+
+@auth.requires_login()
+def edit():
+     """edit an existing wiki page"""
+
+     alarms = db.alarm(request.args(0,cast=int)) or redirect(URL('index'))
+    #Makes Sure you own the page in order to edit
+     #is_owner = True if alarms.created_by == auth.user_id else False
+    # if not is_owner:
+     #   session.flash=T("You are not the owner")
+    #    redirect(URL('index'))
+     form = SQLFORM(db.alarm, alarms).process(
+         next = URL('show',args=request.args))
+     return dict(form=form)
+
+@auth.requires_login()
+def viewall():
+
+    #Row of any friend reqeusts to user
+    row = db(db.requests.requestee==auth.user_id).select()
+    if row:
+        response.flash = 'You have friend requests'
+    #First friend request
+    x = row.first()
+    if x:
+        y = x.requester
+        response.flash = y
+        #Fill the first part of the form in with the logged in user
+        db.friends.friend.default=x.requester
+    #rowx = db((db.requests.requestee==auth.user_id) & (db.requets.requester==x.requester))
+    friendz= SQLFORM(db.friends)
+    if friendz.process().accepted:    #### delete the first friend request
+        db((db.requests.requestee==auth.user_id) & (db.requests.requester==x.requester)).delete()
+
+    #Lists all the alarms for the user
+    list =  db(db.alarm.phone_number == auth.user.phone).select()
+
+    #Form to request friends
+    form = SQLFORM(db.requests).process()
+
+    return dict(list=list, form=form, row=row, friendz=friendz)
+
+
+def init():
+    return dict(message="Hello")
+
+def friendsend():
+    #get the alarm data
+    alarm = db.alarm(request.args[0]) or redirect(URL('index'))
+
+    #get
+    friends = db((db.friends.firstfriend==auth.user_id) & (db.friends.friend==auth.user_id)).select()
+    #table = SQLTABLE(friends, orderby=True, _class='sortable', _width="100%")
+
+    #get the table of friends
+    friendx= db((db.friends.firstfriend==auth.user_id) | (db.friends.friend==auth.user_id)).select()
+    tablex = SQLTABLE(friendx, orderby=True, _class='sortable', _width="100%")
+
+    #
+    #form = SQLFORM(db.alarm, alarm).process(next = URL('show',args=request.args))
+    response.flash= alarm.alarm.reminder_date
+    #response.flash= form.vars.reminder_date
+
+    form = FORM('Enter A Friend`s Phone Number With Their Corresponding Number Next To Their Name:',
+              INPUT(_name='number', requires=IS_NOT_EMPTY()),
+              INPUT(_type='submit'))
+    if form.process().accepted:
+        session.flash = 'form accepted'
+        check=''
+        check=form.vars.number
+        response.flash=check
+        #checks that input friend id number corresponds to a friend that is friends with the logged in user
+        q = db(((db.friends.firstfriend==auth.user_id) & (db.friends.friend==check)) | ((db.friends.friend == auth.user_id) &(db.friends.firstfriend==check))).select()
+        if q:
+            #response.flash= "nothing"
+            l = q.first()
+            response.flash= l.friend
+            l = db(db.auth_user.id==l.friend).select()
+            p=l.first()
+            #this contains the friend's phone number to send the alarm to. 
+            friendnumber=p.phone
+            if p:
+                response.flash='friend found, sending email'
+                response.flash= p.phone
+
+        else:
+            response.flash='not your friend'
+        #if db(db.friends.firstfriend==auth.user_id).select() is None:
+        #    response.flash = 'not a friend'
+        #else:
+        #    response.flash='friend found?'
+        #    q = db((db.friends.firstfriend==auth.user_id) & (db.friends.friend==form.vars.number)).select()
+        #    f = q.number
+        #    response.flash = f
+    else:
+        response.flash = ''
+
+    #f = '1'
+    #m = db((db.friends.firstfriend==auth.user_id) & (db.friends.friend==f)).select()
+    #if m:
+        #response.flash = '?'
+    #    y=m.first()
+        #response.flash=y.friend
+
+
+    #g='1'
+    #rows = db(db.auth_user.id==g).select()
+    #if rows:
+        #response.flash='yay?'
+    #response.flash= auth.user_id
+
+
+    return dict(friends=friends, alarm=alarm, form=form, tablex=tablex, rows=rows)

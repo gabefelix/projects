@@ -1,0 +1,20 @@
+{{extend 'layout.html'}}
+
+<style>
+
+</style>
+<h1>These Are Your Alarms</h1>
+<ul>{{for alarm in list:}}
+     {{=LI(A(alarm.reminder_message, _href=URL('show', args=alarm.id)))}}
+     {{=LI(A('Add A Friend', _href=URL('friendsend', args=alarm.id)))}}
+
+    <br>{{=alarm.reminder_date}}</br>
+{{pass}}</ul>
+
+{{=form}}
+<ul>{{for requests in row:}}
+    You have a friend request from: {{=MARKMIN(requests.requester.phone)}}
+{{pass}}</ul>
+
+
+{{=friendz}}

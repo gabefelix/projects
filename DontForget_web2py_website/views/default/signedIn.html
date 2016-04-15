@@ -1,0 +1,42 @@
+{{extend "layout.html"}}
+
+        <style>
+
+        </style>
+
+<br>
+<br>
+<br>
+
+<div class="container" >
+<link href="{{=URL('static', 'css/button.css')}}" rel="stylesheet" type="text/css" />
+
+<a href="{{=URL('myReminders')}}" class="button"><span>✓</span>All my Reminders </a>
+<a href="{{=URL('index')}}" class="button orange active"><span>✓</span>Create New Reminder</a>
+<a href="{{=URL('addcontact')}}" class="button red"><span>✓</span>Add A Friend</a>
+
+
+<h2>Quick Alarms</h2>
+<a href="{{=URL('quick_reminder_wakeup')}}" class="button purple"><span>✓</span>Wake Up</a>
+<a href="{{=URL('quick_reminder_birthday')}}" class="button turquoise"><span>✓</span>Birthday Reminder</a>
+<a href="{{=URL('quick_reminder_homework')}}" class="button red"><span>✓</span>Homework Assignment</a>
+
+</div>
+
+<h2>
+
+<ul>
+
+<h2> Your Future Reminders</h2>
+
+<ol class="rounded-list">
+{{for alarmTime in remLists:}}
+        <li><a href="#"> {{=alarmTime[0]}} @ {{=alarmTime[1]}} message -> {{=alarmTime[2]}}</a></li>
+{{pass}}
+</ol>
+
+</ul>
+
+
+
+

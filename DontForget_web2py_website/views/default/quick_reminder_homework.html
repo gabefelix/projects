@@ -1,0 +1,54 @@
+{{extend "layout.html"}}
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+    $( "#datepicker" ).datepicker("option", "dateformat","yy-dd-mm");
+
+  });
+  </script>
+</head>
+
+<link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+
+
+<!--The html to display form -->
+
+<div class="form-style-10">
+<link href="{{=URL('static', 'css/customForm.css')}}" rel="stylesheet" type="text/css" />
+<h1>Homework Reminder!<span>Fill out the form and we will sent you a reminder!</span></h1>
+{{=form.custom.begin}}
+<form action="#" enctype="multipart/form-data" method="post" autocomplete="on">
+
+    <div class="section"><span>1</span>What Class?</div>
+        <div class="inner-wrap">
+        <label>Name<input type="text" name="homework_name" value=""/></label>
+
+    </div>
+    <div class="section"><span>2</span>When is it due?</div>
+        <div class="inner-wrap">
+        <label>Date <input  type="text" id="datepicker" onclick="myFunction()" name="homework_date" value="{{=form.vars.reminder_date}}" /></label>
+    </div>
+
+    <div class="button-section">
+     <input type="submit" name="Sign Up" />
+     <input type="hidden" name="formname" value="test" />
+     <span class="privacy-policy">
+
+     </span>
+    </div>
+</form>
+{{=form.custom.end}}
+</div>
+

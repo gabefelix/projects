@@ -1,0 +1,42 @@
+Overall, we finished most of the proposed stories for sprint 2 even though a 
+lot of scrums for sprint 1 carried over. The functionality is all complete, and
+the most difficult problems for this website are almost all finished. We could
+not finish everything in sprint 2 because of lack of available free time due 
+to midterms. Sprint 3 will take care of most of the visuals in the front end
+and primarily focus on executing Don't Forget cleanly.
+
+What should we stop doing?
+Because of our recent progress, we have become too optimistic and want to add
+a lot of extra features to the website. Overall, we have no finished the base
+product and need to focus on that before starting on the extras.
+
+What should we start doing?
+We should start being more organized with git by pushing and pulling our 
+projects more often. We often times work independently without pushing or 
+pulling the code from git, which causes a lot of differences when we meet up
+for our scrum meetings. We need to also focus on one thing at a time rather 
+than putting our attention to the extra features of Don't Forget.
+
+What is working well that we should continue doing?
+We usually have on large meeting to knock off most of the scrums in the sprint. 
+This leads to a lot more productivity amongst the project and we should still
+continue to do this.
+
+What work was completed and not completed?
+Completed:
+	-Able to store reminders in a database which will later be accessable.
+	-The user is able to choose what carrier their phone uses in order to 
+	 to send text messages
+	-Able to send emails to text messages
+	-There are drop down options and fields for the user to type in their
+	 information, which will be later stored and accessible
+	-User able to sign up using various email providers so that their 
+	 information will be stored for convenience later.
+
+
+Not Completed:
+	-Not able to send text messages in the future (work in progress)
+	-User not able to respond to text messages sent via email
+
+What is our rate of completing work?
+~85%
