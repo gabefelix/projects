@@ -93,9 +93,13 @@ d3.csv("dept.csv", function(error, data) {
 
 
 
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
+var margin = {top: 20, right: 120, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
+
+var margin2 = {top: 20, right: 120, bottom: 30, left: 50},
+    width2 = 960 - margin.left - margin.right,
+    height2 = 500 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%Y").parse;
     //formatPercent = d3.format(".0%");
@@ -132,6 +136,10 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 
 d3.csv("depttwo.csv", function(error, data) {
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
@@ -163,12 +171,33 @@ d3.csv("depttwo.csv", function(error, data) {
   var browser = svg.selectAll(".browser")
       .data(browsers)
     .enter().append("g")
-      .attr("class", "browser");
+      .attr("class", "browser")
+    .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip .html(d["name"])
+               .style("left", (d3.event.pageX) + "px")
+               .style("top", (d3.event.pageY-28) + "px");
+        })
+        .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+        });
 
   browser.append("path")
       .attr("class", "area")
       .attr("d", function(d) { return area(d.values); })
+      .on("click", function(){
+         var newpath = browser.append("path")
+                        .attr("class", "line")
+                    .attr("d", function(d) { return line(d.values); })
+                    .style("stroke", function(d) { return color(d.name);
+                                                 })
+         })
       .style("fill", function(d) { return color(d.name); });
+      
 
   browser.append("text")
       .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
@@ -185,4 +214,44 @@ d3.csv("depttwo.csv", function(error, data) {
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis);
+    
+           arrangeLabels();
+
 });
+
+
+function arrangeLabels() {
+  var move = 1;
+  while(move > 0) {
+    move = 0;
+    svg.selectAll(".place-label")
+       .each(function() {
+         var that = this,
+             a = this.getBoundingClientRect();
+         svg.selectAll(".place-label")
+            .each(function() {
+              if(this != that) {
+                var b = this.getBoundingClientRect();
+                if((Math.abs(a.left - b.left) * 2 < (a.width + b.width)) &&
+                   (Math.abs(a.top - b.top) * 2 < (a.height + b.height))) {
+                  // overlap, move labels
+                  var dx = (Math.max(0, a.right - b.left) +
+                           Math.min(0, a.left - b.right)) * 0.01,
+                      dy = (Math.max(0, a.bottom - b.top) +
+                           Math.min(0, a.top - b.bottom)) * 0.02,
+                      tt = d3.transform(d3.select(this).attr("transform")),
+                      to = d3.transform(d3.select(that).attr("transform"));
+                  move += Math.abs(dx) + Math.abs(dy);
+                
+                  to.translate = [ to.translate[0] + dx, to.translate[1] + dy ];
+                  tt.translate = [ tt.translate[0] - dx, tt.translate[1] - dy ];
+                  d3.select(this).attr("transform", "translate(" + tt.translate + ")");
+                  d3.select(that).attr("transform", "translate(" + to.translate + ")");
+                  a = this.getBoundingClientRect();
+                }
+              }
+            });
+       });
+  }
+}
+

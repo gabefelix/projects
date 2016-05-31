@@ -13,13 +13,41 @@
   text-anchor: end;
 }*/
  body {
-            font: 12px Arial;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  position: relative;
+  width: 960px;
         }
-        
+text {
+  font: 10px sans-serif;
+}
+
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+input {
+  margin: 0 7px;
+}
+.tooltip {
+ position: absolute;			
+    text-align: center;			
+    width: 200px;					
+    height: 60px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;		
+}
+
 
 path { 
     stroke: steelblue;
-    stroke-width: 2;
+    stroke-width: 0;
     fill: none;
 }
 
@@ -30,6 +58,13 @@ path {
     stroke-width: 1;
     shape-rendering: crispEdges;
 }
+.arc path {
+  stroke: #fff;
+}
+.place,
+        .place-label {
+            fill: #444;
+        }
 
 
 /*.line {
